@@ -31,11 +31,16 @@ def color(elev):
          col='black'
      return col
 
+fg=folium.FeatureGroup(name='Volcano Locations')
 
 for lat,lon,name,elev in zip(df['LAT'],df['LON'],df['NAME'],df['ELEV']):  #when looping with 2 or more iterators, we use zip, LAT n LON are defined in txt file
-    map.add_child(folium.Marker(location=[lat, lon], popup=name, icon=folium.Icon(color=color(elev)) ))
+    fg.add_child(folium.Marker(location=[lat, lon], popup=name, icon=folium.Icon(color=color(elev)) ))
 
+map.add_child(fg)
 
+map.add_child(folium.GeoJson(data=open('shape.json'), name='world_pop',\
+style_function=lambda x:{'fillColor':'green' if x['properties']['POP2005']<=50000000 else 'blue' if 50000000< x['properties']['POP2005']<=1000000000\
+    else 'red'}))
 
-
+map.add_child(folium.LayerControl())
 map.save(outfile='test.html')
