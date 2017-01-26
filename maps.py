@@ -24,7 +24,7 @@ def color(elev):
      if elev in range(int(minimum) , int (minimum+step)):
          col='green'
      elif elev in range(int (minimum+step),int (minimum+step*2)):
-         col='blue'
+         col='orange'
      elif elev in range(int (minimum+step*2), int (minimum+step*3)):
          col='red'
      else:
